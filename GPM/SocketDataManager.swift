@@ -15,9 +15,10 @@ class SocketDataManager: NSObject, StreamDelegate {
     var inputStream: InputStream?
     var outputStream: OutputStream?
     var messages = [AnyHashable]()
-    weak var uiPresenter :ViewConsole!
     
-    init(with presenter:ViewConsole){
+    weak var uiPresenter :ViewController!
+    
+    init(with presenter:ViewController){
         
         self.uiPresenter = presenter
     }
@@ -92,8 +93,9 @@ class SocketDataManager: NSObject, StreamDelegate {
     }
     
     func messageReceived(message: String){
-        
-        uiPresenter?.update(message: "\(message)")
+        if uiPresenter.viewConsole != nil {
+            uiPresenter.viewConsole?.update(message: "\(message)")
+        }
         print(message)
     }
     
@@ -104,7 +106,6 @@ class SocketDataManager: NSObject, StreamDelegate {
         if let _ = response.data(using: .ascii) {
             outputStream?.write(buff, maxLength: buff.count)
         }
-
     }
 
 }

@@ -10,16 +10,7 @@ import UIKit
 
 import Foundation
 
-struct DataSocket {
-    
-    let ipAddress: String!
-    let port: Int!
-    
-    init(ip: String, port: String){
-        self.ipAddress = ip
-        self.port      = Int(port)
-    }
-}
+
  
 class ViewConsole: UIViewController, UITextFieldDelegate  {
 
@@ -31,10 +22,8 @@ class ViewConsole: UIViewController, UITextFieldDelegate  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        socketConnector = SocketDataManager(with: self)
         messageField.delegate = self
-        let soc = DataSocket(ip: "192.168.10.172", port: "2000")
-        socketConnector.connectWith(socket: soc)
+        
     }
     
     func send(message: String){
@@ -42,16 +31,7 @@ class ViewConsole: UIViewController, UITextFieldDelegate  {
         socketConnector.send(message: message)
         update(message: "\(message)")
     }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let msg = messageField.text else {
-            return false
-        }
-        let mymsg = msg + "\r"
-        send(message: mymsg)
-        messageField.text = ""
-        //view.endEditing(true)
-        return true
-    }
+    
     func update(message: String){
         
         if let text = messageHistoryView.text{
@@ -70,7 +50,18 @@ class ViewConsole: UIViewController, UITextFieldDelegate  {
         let myRange=NSMakeRange(messageHistoryView.text.count-1, 0);
         messageHistoryView.scrollRangeToVisible(myRange)
 
-        
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let msg = messageField.text else {
+            return false
+        }
+        let mymsg = msg + "\r"
+        send(message: mymsg)
+        messageField.text = ""
+        //view.endEditing(true)
+        return true
+    }
+    
     
 }

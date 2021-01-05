@@ -18,6 +18,10 @@
 		E50344E125A38ECF0097793A /* Sources in Resources */ = {isa = PBXBuildFile; fileRef = E50344E025A38ECE0097793A /* Sources */; };
 		E50344E825A3AFDA0097793A /* ViewConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50344E725A3AFDA0097793A /* ViewConsole.swift */; };
 		E50344ED25A3B2DA0097793A /* SocketDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50344EC25A3B2DA0097793A /* SocketDataManager.swift */; };
+		E5455F8825A4EDED00F204F8 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5455F8625A4EDED00F204F8 /* MapController.swift */; };
+		E5455F9525A4EE3600F204F8 /* ViewMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5455F9325A4EE3600F204F8 /* ViewMap.swift */; };
+		E5455F9625A4EE3600F204F8 /* ViewMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5455F9425A4EE3600F204F8 /* ViewMap.xib */; };
+		E5455F9E25A4FD0000F204F8 /* ViewMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5455F9D25A4FD0000F204F8 /* ViewMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +59,10 @@
 		E50344E025A38ECE0097793A /* Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sources; sourceTree = "<group>"; };
 		E50344E725A3AFDA0097793A /* ViewConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConsole.swift; sourceTree = "<group>"; };
 		E50344EC25A3B2DA0097793A /* SocketDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketDataManager.swift; sourceTree = "<group>"; };
+		E5455F8625A4EDED00F204F8 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		E5455F9325A4EE3600F204F8 /* ViewMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMap.swift; sourceTree = "<group>"; };
+		E5455F9425A4EE3600F204F8 /* ViewMap.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewMap.xib; sourceTree = "<group>"; };
+		E5455F9D25A4FD0000F204F8 /* ViewMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,11 +118,15 @@
 				E50344A925A384910097793A /* AppDelegate.swift */,
 				E50344AB25A384910097793A /* SceneDelegate.swift */,
 				E50344AD25A384910097793A /* ViewController.swift */,
+				E50344E725A3AFDA0097793A /* ViewConsole.swift */,
+				E5455F9325A4EE3600F204F8 /* ViewMap.swift */,
 				E50344AF25A384910097793A /* Main.storyboard */,
+				E5455F9D25A4FD0000F204F8 /* ViewMonitor.swift */,
+				E5455F8625A4EDED00F204F8 /* MapController.swift */,
+				E5455F9425A4EE3600F204F8 /* ViewMap.xib */,
 				E50344B225A3849A0097793A /* Assets.xcassets */,
 				E50344B425A3849A0097793A /* LaunchScreen.storyboard */,
 				E50344B725A3849A0097793A /* Info.plist */,
-				E50344E725A3AFDA0097793A /* ViewConsole.swift */,
 			);
 			path = GPM;
 			sourceTree = "<group>";
@@ -244,6 +256,7 @@
 				E50344B625A3849A0097793A /* LaunchScreen.storyboard in Resources */,
 				E50344B325A3849A0097793A /* Assets.xcassets in Resources */,
 				E50344B125A384910097793A /* Main.storyboard in Resources */,
+				E5455F9625A4EE3600F204F8 /* ViewMap.xib in Resources */,
 				E50344E125A38ECF0097793A /* Sources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,8 +285,11 @@
 				E50344AE25A384910097793A /* ViewController.swift in Sources */,
 				E50344ED25A3B2DA0097793A /* SocketDataManager.swift in Sources */,
 				E50344AA25A384910097793A /* AppDelegate.swift in Sources */,
+				E5455F9525A4EE3600F204F8 /* ViewMap.swift in Sources */,
 				E50344E825A3AFDA0097793A /* ViewConsole.swift in Sources */,
+				E5455F8825A4EDED00F204F8 /* MapController.swift in Sources */,
 				E50344AC25A384910097793A /* SceneDelegate.swift in Sources */,
+				E5455F9E25A4FD0000F204F8 /* ViewMonitor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +468,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S493WXC236;
 				INFOPLIST_FILE = GPM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -471,6 +488,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S493WXC236;
 				INFOPLIST_FILE = GPM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
