@@ -21,6 +21,7 @@ class SocketDataManager: NSObject, StreamDelegate {
         
         self.uiPresenter = presenter
     }
+    
     func connectWith(socket: DataSocket) {
 
         CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (socket.ipAddress! as CFString), UInt32(socket.port), &readStream, &writeStream)

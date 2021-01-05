@@ -8,6 +8,7 @@
 
 import UIKit
 
+import Foundation
 
 struct DataSocket {
     
@@ -19,13 +20,14 @@ struct DataSocket {
         self.port      = Int(port)
     }
 }
-class ViewConsole: UIViewController , UITextFieldDelegate {
+ 
+class ViewConsole: UIViewController, UITextFieldDelegate  {
 
     var socketConnector:SocketDataManager!
     
-    @IBOutlet weak var messageHistoryView: UITextView!
-    
     @IBOutlet weak var messageField: UITextField!
+    
+    @IBOutlet weak var messageHistoryView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
