@@ -95,6 +95,10 @@ class SocketDataManager: NSObject, StreamDelegate {
     func messageReceived(message: String){
         if uiPresenter.viewConsole != nil {
             uiPresenter.viewConsole?.update(message: "\(message)")
+        } else if uiPresenter.viewMonitor != nil {
+            uiPresenter.viewMonitor?.update(message: "\(message)")
+        } else {
+            uiPresenter?.update(message: "\(message)")
         }
         print(message)
     }
