@@ -97,7 +97,7 @@ class ViewController: UIViewController , UITextFieldDelegate{
         {
             viewConsole = segue.destination as? ViewConsole
             viewConsole?.socketConnector = socketConnector
-        }else {viewMonitor=nil}
+        }else {viewConsole = nil}
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

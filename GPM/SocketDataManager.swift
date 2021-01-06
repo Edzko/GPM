@@ -71,10 +71,20 @@ class SocketDataManager: NSObject, StreamDelegate {
                 while (inputStream?.hasBytesAvailable)! {
                     len = (inputStream?.read(&dataBuffer, maxLength: 1024))!
                     if len > 0 {
-                        let output = String(bytes: dataBuffer, encoding: .ascii)
-                        if nil != output {
-                            print("server said: \(output ?? "")")
-                            messageReceived(message: output!)
+                        
+                        if uiPresenter.viewMonitor != nil {
+                            uiPresenter.viewMonitor?.update(message: dataBuffer)
+                        } else {
+                            let output = String(bytes: dataBuffer, encoding: .ascii)
+                            if nil != output {
+                                print("server said: \(output ?? "")")
+                                if uiPresenter.viewConsole != nil {
+                                    uiPresenter.viewConsole?.update(message: "\(output!)")
+                                } else {
+                                    uiPresenter?.update(message: "\(output!)")
+                                }
+                                print(output!)
+                            }
                         }
                     }
                 }
@@ -93,19 +103,12 @@ class SocketDataManager: NSObject, StreamDelegate {
     }
     
     func messageReceived(message: String){
-        if uiPresenter.viewConsole != nil {
-            uiPresenter.viewConsole?.update(message: "\(message)")
-        } else if uiPresenter.viewMonitor != nil {
-            uiPresenter.viewMonitor?.update(message: "\(message)")
-        } else {
-            uiPresenter?.update(message: "\(message)")
-        }
-        print(message)
+        
     }
     
     func send(message: String){
         
-        let response = "msg:\(message)"
+        let response = "\(message)"
         let buff = [UInt8](message.utf8)
         if let _ = response.data(using: .ascii) {
             outputStream?.write(buff, maxLength: buff.count)

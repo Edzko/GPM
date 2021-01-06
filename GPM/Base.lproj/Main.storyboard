@@ -91,30 +91,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZBc-t6-ICO" userLabel="Heading">
-                                <rect key="frame" x="20" y="176" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPS Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iey-jv-ERe" userLabel="Info">
+                                <rect key="frame" x="20" y="178.5" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EGm-ry-Zdc" userLabel="Latitude">
-                                <rect key="frame" x="20" y="147" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vcc power" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDU-Bz-r7d" userLabel="Vcc">
+                                <rect key="frame" x="20" y="203" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40m-Xa-xMV" userLabel="Longitude">
-                                <rect key="frame" x="20" y="118" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heading:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZBc-t6-ICO" userLabel="Heading">
+                                <rect key="frame" x="20" y="154" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iey-jv-ERe" userLabel="Info">
-                                <rect key="frame" x="20" y="199" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EGm-ry-Zdc" userLabel="Latitude">
+                                <rect key="frame" x="20" y="129.5" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40m-Xa-xMV" userLabel="Longitude">
+                                <rect key="frame" x="20" y="105" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="GPS Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wez-Wc-Khy" userLabel="Std">
+                                <rect key="frame" x="20" y="223" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -122,8 +130,36 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="uRE-mN-wBM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ZBc-t6-ICO" firstAttribute="leading" secondItem="Wyz-bx-s1k" secondAttribute="leadingMargin" id="9DU-NA-3Wj"/>
+                            <constraint firstItem="40m-Xa-xMV" firstAttribute="top" secondItem="uRE-mN-wBM" secondAttribute="top" constant="17" id="Aiu-59-VYc"/>
+                            <constraint firstItem="rDU-Bz-r7d" firstAttribute="firstBaseline" secondItem="Iey-jv-ERe" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="FCp-8f-d66"/>
+                            <constraint firstItem="EGm-ry-Zdc" firstAttribute="firstBaseline" secondItem="40m-Xa-xMV" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="JJi-FO-cBQ"/>
+                            <constraint firstItem="ZBc-t6-ICO" firstAttribute="leading" secondItem="40m-Xa-xMV" secondAttribute="leading" id="LJO-Hk-DHq"/>
+                            <constraint firstItem="ZBc-t6-ICO" firstAttribute="firstBaseline" secondItem="EGm-ry-Zdc" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="MkK-cG-ZBe"/>
+                            <constraint firstItem="ZBc-t6-ICO" firstAttribute="leading" secondItem="Iey-jv-ERe" secondAttribute="leading" id="P5Y-51-tgL"/>
+                            <constraint firstItem="ZBc-t6-ICO" firstAttribute="trailing" secondItem="40m-Xa-xMV" secondAttribute="trailing" id="Tm1-3j-sLe"/>
+                            <constraint firstItem="ZBc-t6-ICO" firstAttribute="trailing" secondItem="Iey-jv-ERe" secondAttribute="trailing" id="XCF-wW-xdg"/>
+                            <constraint firstItem="ZBc-t6-ICO" firstAttribute="leading" secondItem="EGm-ry-Zdc" secondAttribute="leading" id="XQC-K0-Fqn"/>
+                            <constraint firstItem="rDU-Bz-r7d" firstAttribute="leading" secondItem="Iey-jv-ERe" secondAttribute="leading" id="YJZ-1u-5St"/>
+                            <constraint firstItem="wez-Wc-Khy" firstAttribute="firstBaseline" secondItem="rDU-Bz-r7d" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="kKm-k5-j1V"/>
+                            <constraint firstItem="rDU-Bz-r7d" firstAttribute="trailing" secondItem="Iey-jv-ERe" secondAttribute="trailing" id="suL-8D-Pez"/>
+                            <constraint firstItem="ZBc-t6-ICO" firstAttribute="trailing" secondItem="EGm-ry-Zdc" secondAttribute="trailing" id="tXN-DI-tYt"/>
+                            <constraint firstItem="rDU-Bz-r7d" firstAttribute="leading" secondItem="wez-Wc-Khy" secondAttribute="leading" id="wd3-Jd-Ud7"/>
+                            <constraint firstItem="Iey-jv-ERe" firstAttribute="firstBaseline" secondItem="ZBc-t6-ICO" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="wgI-A7-pch"/>
+                            <constraint firstItem="ZBc-t6-ICO" firstAttribute="trailing" secondItem="Wyz-bx-s1k" secondAttribute="trailingMargin" id="yGO-QM-WEM"/>
+                            <constraint firstItem="rDU-Bz-r7d" firstAttribute="trailing" secondItem="wez-Wc-Khy" secondAttribute="trailing" id="yHF-n8-zwL"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Monitor" id="WEB-0g-nVj"/>
+                    <connections>
+                        <outlet property="headField" destination="ZBc-t6-ICO" id="MaQ-Gc-bjj"/>
+                        <outlet property="infoField" destination="Iey-jv-ERe" id="wg9-GE-1Jf"/>
+                        <outlet property="latField" destination="EGm-ry-Zdc" id="qN6-MH-ZID"/>
+                        <outlet property="lonField" destination="40m-Xa-xMV" id="efW-F4-29O"/>
+                        <outlet property="stdField" destination="wez-Wc-Khy" id="Geo-Bq-TgD"/>
+                        <outlet property="vccField" destination="rDU-Bz-r7d" id="VeM-08-x2u"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NkG-A1-zdX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
