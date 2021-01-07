@@ -14,6 +14,11 @@ class ViewMap: UIViewController, CLLocationManagerDelegate {
     
     var mainDlg: ViewController!
     var socketConnector:SocketDataManager!
+    var longitude: Double?
+    var latitude: Double?
+    var heading: Float?
+    var timer = Timer()
+
     @IBOutlet weak var GPMMap: MKMapView!
     //let locationManager = CLLocationManager()
     
@@ -33,9 +38,16 @@ class ViewMap: UIViewController, CLLocationManagerDelegate {
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
         if parent == nil {
+            timer.invalidate()
             mainDlg.viewID = 1
         }
     }
+    
+    @objc func fireTimer() {
+        let message = "G"
+        socketConnector.send(message: message)
+    }
+    
     //func locationManager(_ manager:CLLocationManager, didUpdateHeading newHeading: CLHeading)
     //{
     //    GPMMap.camera.heading = newHeading.magneticHeading
@@ -99,13 +111,13 @@ class ViewMap: UIViewController, CLLocationManagerDelegate {
         if message.count<48 {
             return
         }
-        let lon = valDouble(buf: message, start: 8)
+        latitude = valDouble(buf: message, start: 8)
         //lonField.text = String(format: "Longitude: %1.10f",lon)
         
-        let lat = valDouble(buf: message, start: 16)
+        longitude = valDouble(buf: message, start: 16)
         //latField.text = String(format: "Latitude: %1.10f",lat)
         
-        let heading = valFloat(buf: message, start: 24)
+        heading = valFloat(buf: message, start: 24)
        // headField.text = String(format: "Heading: %1.2f",heading)
         
         let std = valFloat(buf: message, start: 28)
@@ -117,6 +129,11 @@ class ViewMap: UIViewController, CLLocationManagerDelegate {
         let info = valInt16(buf: message, start: 36)
         //infoField.text = String(format: "Info: %d",info)
         
+        GPMMap.camera.heading = Double(heading!)
+        GPMMap.setCamera(GPMMap.camera,animated:true)
+        
+        let initialLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+        GPMMap.centerToLocation(initialLocation)
     }
 }
 private extension MKMapView {

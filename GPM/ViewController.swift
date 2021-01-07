@@ -29,6 +29,7 @@ class ViewController: UIViewController , UITextFieldDelegate{
     var timer = Timer()
     var discCount: Int?
     var viewID : Int?
+    var gotVersion: Bool?
     
     @IBOutlet weak var discLabel: UILabel!
     
@@ -47,6 +48,7 @@ class ViewController: UIViewController , UITextFieldDelegate{
         discGPM = UDPServer(address: "0.0.0.0",port: 55555)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
         viewID = 1;
+        gotVersion = false
     }
     
     
@@ -85,8 +87,11 @@ class ViewController: UIViewController , UITextFieldDelegate{
     }
     
     func update(message: String) {
-        let index = message.index(message.startIndex, offsetBy: 2)
-        versionField.text = String(message[index...])
+        if gotVersion == false {
+            let index = message.index(message.startIndex, offsetBy: 2)
+            versionField.text = String(message[index...])
+            gotVersion = true
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -101,10 +106,14 @@ class ViewController: UIViewController , UITextFieldDelegate{
         case is ViewConsole:
             viewConsole = segue.destination as? ViewConsole
             viewConsole?.socketConnector = socketConnector
+            viewConsole.mainDlg = self
             viewID = 3
         case is ViewMap:
             viewMap = segue.destination as? ViewMap
             viewMap.socketConnector = socketConnector
+            viewMap.timer = Timer.scheduledTimer(
+                timeInterval: 1.0, target: viewMap, selector: #selector(viewMap.fireTimer), userInfo: nil, repeats: true)
+            viewMap.mainDlg = self
             viewID = 4
         default:
             viewID = 1

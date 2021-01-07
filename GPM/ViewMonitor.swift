@@ -93,11 +93,11 @@ class ViewMonitor: UIViewController {
         if message.count<48 {
             return
         }
-        let lon = valDouble(buf: message, start: 8)
-        lonField.text = String(format: "Longitude: %1.10f",lon)
-        
-        let lat = valDouble(buf: message, start: 16)
+        let lat = valDouble(buf: message, start: 8)
         latField.text = String(format: "Latitude: %1.10f",lat)
+        
+        let lon = valDouble(buf: message, start: 16)
+        lonField.text = String(format: "Longitude: %1.10f",lon)
         
         let heading = valFloat(buf: message, start: 24)
         headField.text = String(format: "Heading: %1.2f",heading)

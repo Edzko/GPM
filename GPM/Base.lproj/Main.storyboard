@@ -153,7 +153,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Monitor" id="WEB-0g-nVj"/>
                     <connections>
-                        <outlet property="backBtn" destination="WEB-0g-nVj" id="bVL-XB-ey3"/>
                         <outlet property="headField" destination="ZBc-t6-ICO" id="MaQ-Gc-bjj"/>
                         <outlet property="infoField" destination="Iey-jv-ERe" id="wg9-GE-1Jf"/>
                         <outlet property="latField" destination="EGm-ry-Zdc" id="qN6-MH-ZID"/>
