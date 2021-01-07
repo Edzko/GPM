@@ -23,10 +23,12 @@ class ViewController: UIViewController , UITextFieldDelegate{
     
     var socketConnector:SocketDataManager!
     var viewConsole:ViewConsole!
+    var viewMap: ViewMap!
     var viewMonitor:ViewMonitor!
     var discGPM: UDPServer?
     var timer = Timer()
     var discCount: Int?
+    var viewID : Int?
     
     @IBOutlet weak var discLabel: UILabel!
     
@@ -44,7 +46,7 @@ class ViewController: UIViewController , UITextFieldDelegate{
         discField.delegate = self
         discGPM = UDPServer(address: "0.0.0.0",port: 55555)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
-        
+        viewID = 1;
     }
     
     
@@ -88,16 +90,26 @@ class ViewController: UIViewController , UITextFieldDelegate{
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is ViewMonitor
-        {
+        switch segue.destination {
+        case is ViewMonitor:
             viewMonitor = segue.destination as? ViewMonitor
             viewMonitor?.socketConnector = socketConnector
-        } else {viewMonitor = nil}
-        if segue.destination is ViewConsole
-        {
+            viewMonitor.mainDlg = self
+            viewMonitor.timer = Timer.scheduledTimer(
+                timeInterval: 1.0, target: viewMonitor, selector: #selector(viewMonitor.fireTimer), userInfo: nil, repeats: true)
+            viewID = 2
+        case is ViewConsole:
             viewConsole = segue.destination as? ViewConsole
             viewConsole?.socketConnector = socketConnector
-        }else {viewConsole = nil}
+            viewID = 3
+        case is ViewMap:
+            viewMap = segue.destination as? ViewMap
+            viewMap.socketConnector = socketConnector
+            viewID = 4
+        default:
+            viewID = 1
+        }
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

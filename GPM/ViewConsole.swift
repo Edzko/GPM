@@ -10,12 +10,10 @@ import UIKit
 
 import Foundation
 
-
- 
 class ViewConsole: UIViewController, UITextFieldDelegate  {
 
     var socketConnector:SocketDataManager!
-    
+    var mainDlg: ViewController!
     @IBOutlet weak var messageField: UITextField!
     
     @IBOutlet weak var messageHistoryView: UITextView!
@@ -24,6 +22,17 @@ class ViewConsole: UIViewController, UITextFieldDelegate  {
         super.viewDidLoad()
         messageField.delegate = self
         
+    }
+    override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
+        if parent == nil {
+            mainDlg.viewID = 1
+        }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     func send(message: String){

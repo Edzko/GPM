@@ -11,6 +11,7 @@ import UIKit
 class ViewMonitor: UIViewController {
 
     var socketConnector:SocketDataManager!
+    var mainDlg : ViewController!
     var timer = Timer()
     
     @IBOutlet weak var lonField: UILabel!
@@ -24,19 +25,29 @@ class ViewMonitor: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
         // Do any additional setup after loading the view.
+        
     }
+    
     
     @objc func fireTimer() {
         let message = "G"
         socketConnector.send(message: message)
     }
     
+    override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
+        if parent == nil {
+            print("back button pressed")
+            timer.invalidate()
+            mainDlg.viewID = 1
+        }
+    }
+    
+    
     func valDouble(buf: Array<UInt8>, start: Int) -> Double {
         var val : Double = 0.0
         var dbuf = [UInt8](repeating: 0, count: 8)
-        //let buf : [UInt8] = Array(data.utf8)
         for i in 0...7 {
             dbuf[i] = buf[i+start]
         }
@@ -46,7 +57,6 @@ class ViewMonitor: UIViewController {
     func valFloat(buf: Array<UInt8>, start: Int) -> Float {
         var val: Float = 0.0
         var fbuf = [UInt8](repeating: 0, count: 4)
-        //let buf : [UInt8] = Array(data.utf8)
         for i in 0...3 {
             fbuf[i] = buf[i+start]
         }
@@ -56,7 +66,6 @@ class ViewMonitor: UIViewController {
     func valInt16(buf: Array<UInt8>, start: Int) -> Int16 {
         var val: Int16 = 0
         var ibuf = [UInt8](repeating: 0, count: 2)
-        //let buf : [UInt8] = Array(data.utf8)
         for i in 0...1 {
             ibuf[i] = buf[i+start]
         }

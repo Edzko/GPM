@@ -153,6 +153,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Monitor" id="WEB-0g-nVj"/>
                     <connections>
+                        <outlet property="backBtn" destination="WEB-0g-nVj" id="bVL-XB-ey3"/>
                         <outlet property="headField" destination="ZBc-t6-ICO" id="MaQ-Gc-bjj"/>
                         <outlet property="infoField" destination="Iey-jv-ERe" id="wg9-GE-1Jf"/>
                         <outlet property="latField" destination="EGm-ry-Zdc" id="qN6-MH-ZID"/>
@@ -232,7 +233,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.97937993517205069" blue="0.88329690560388752" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="10"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="10"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JXW-gP-MIL" userLabel="Message Field">

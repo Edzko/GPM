@@ -17,7 +17,6 @@
 		E50344CC25A3849B0097793A /* GPMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50344CB25A3849B0097793A /* GPMUITests.swift */; };
 		E50344E825A3AFDA0097793A /* ViewConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50344E725A3AFDA0097793A /* ViewConsole.swift */; };
 		E50344ED25A3B2DA0097793A /* SocketDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50344EC25A3B2DA0097793A /* SocketDataManager.swift */; };
-		E5455F8825A4EDED00F204F8 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5455F8625A4EDED00F204F8 /* MapController.swift */; };
 		E5455F9525A4EE3600F204F8 /* ViewMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5455F9325A4EE3600F204F8 /* ViewMap.swift */; };
 		E5455F9625A4EE3600F204F8 /* ViewMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5455F9425A4EE3600F204F8 /* ViewMap.xib */; };
 		E5455F9E25A4FD0000F204F8 /* ViewMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5455F9D25A4FD0000F204F8 /* ViewMonitor.swift */; };
@@ -64,7 +63,6 @@
 		E50344CD25A3849B0097793A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E50344E725A3AFDA0097793A /* ViewConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConsole.swift; sourceTree = "<group>"; };
 		E50344EC25A3B2DA0097793A /* SocketDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketDataManager.swift; sourceTree = "<group>"; };
-		E5455F8625A4EDED00F204F8 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		E5455F9325A4EE3600F204F8 /* ViewMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMap.swift; sourceTree = "<group>"; };
 		E5455F9425A4EE3600F204F8 /* ViewMap.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewMap.xib; sourceTree = "<group>"; };
 		E5455F9D25A4FD0000F204F8 /* ViewMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMonitor.swift; sourceTree = "<group>"; };
@@ -138,7 +136,6 @@
 				E50344AF25A384910097793A /* Main.storyboard */,
 				E5455F9D25A4FD0000F204F8 /* ViewMonitor.swift */,
 				E5455F9325A4EE3600F204F8 /* ViewMap.swift */,
-				E5455F8625A4EDED00F204F8 /* MapController.swift */,
 				E5455F9425A4EE3600F204F8 /* ViewMap.xib */,
 				E50344B225A3849A0097793A /* Assets.xcassets */,
 				E50344B425A3849A0097793A /* LaunchScreen.storyboard */,
@@ -331,7 +328,6 @@
 				E5455FAD25A50E7800F204F8 /* Socket.swift in Sources */,
 				E50344E825A3AFDA0097793A /* ViewConsole.swift in Sources */,
 				E5455FAE25A50E7800F204F8 /* yudpsocket.c in Sources */,
-				E5455F8825A4EDED00F204F8 /* MapController.swift in Sources */,
 				E50344AC25A384910097793A /* SceneDelegate.swift in Sources */,
 				E5455F9E25A4FD0000F204F8 /* ViewMonitor.swift in Sources */,
 				E5455FAF25A50E7800F204F8 /* UDPClient.swift in Sources */,

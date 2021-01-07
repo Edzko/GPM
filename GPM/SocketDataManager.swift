@@ -72,13 +72,15 @@ class SocketDataManager: NSObject, StreamDelegate {
                     len = (inputStream?.read(&dataBuffer, maxLength: 1024))!
                     if len > 0 {
                         
-                        if uiPresenter.viewMonitor != nil {
+                        if uiPresenter.viewID == 2 {
                             uiPresenter.viewMonitor?.update(message: dataBuffer)
+                        } else if uiPresenter.viewID == 4 {
+                            uiPresenter.viewMap?.update(message: dataBuffer)
                         } else {
                             let output = String(bytes: dataBuffer, encoding: .ascii)
                             if nil != output {
                                 print("server said: \(output ?? "")")
-                                if uiPresenter.viewConsole != nil {
+                                if uiPresenter.viewID == 3 {
                                     uiPresenter.viewConsole?.update(message: "\(output!)")
                                 } else {
                                     uiPresenter?.update(message: "\(output!)")
@@ -102,9 +104,7 @@ class SocketDataManager: NSObject, StreamDelegate {
         }
     }
     
-    func messageReceived(message: String){
-        
-    }
+    
     
     func send(message: String){
         
