@@ -30,7 +30,9 @@ class ViewMap: UIViewController, CLLocationManagerDelegate {
         GPMMap.setCameraZoomRange(zoomRange, animated: true)
         //locationManager.delegate = self
         //locationManager.startUpdatingHeading()
-        
+        heading = 0.0
+        longitude = 0.0
+        latitude = 0.0
         GPMMap.camera.heading = 90
         GPMMap.setCamera(GPMMap.camera,animated:true)
     }
@@ -117,7 +119,7 @@ class ViewMap: UIViewController, CLLocationManagerDelegate {
         longitude = valDouble(buf: message, start: 16)
         //latField.text = String(format: "Latitude: %1.10f",lat)
         
-        heading = valFloat(buf: message, start: 24)
+        heading = 0.75*heading! + 0.25*valFloat(buf: message, start: 24)
        // headField.text = String(format: "Heading: %1.2f",heading)
         
         let std = valFloat(buf: message, start: 28)
@@ -129,11 +131,16 @@ class ViewMap: UIViewController, CLLocationManagerDelegate {
         let info = valInt16(buf: message, start: 36)
         //infoField.text = String(format: "Info: %d",info)
         
-        GPMMap.camera.heading = Double(heading!)
-        GPMMap.setCamera(GPMMap.camera,animated:true)
-        
         let initialLocation = CLLocation(latitude: latitude!, longitude: longitude!)
         GPMMap.centerToLocation(initialLocation)
+        
+        GPMMap.camera.heading = Double(heading!)
+        GPMMap.setCamera(GPMMap.camera,animated:true)
+        //GPMMap.setCamera(GPMMap.camera, withDuration: 1, animationTimingFunction:
+        //                    CAMediaTimingFunction(name:
+        //                    CAMediaTimingFunctionName.easeInEaseOut))
+        //)
+        
     }
 }
 private extension MKMapView {

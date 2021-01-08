@@ -21,8 +21,9 @@ class ViewConsole: UIViewController, UITextFieldDelegate  {
     override func viewDidLoad() {
         super.viewDidLoad()
         messageField.delegate = self
-        
+        messageField.becomeFirstResponder()
     }
+    
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
         if parent == nil {

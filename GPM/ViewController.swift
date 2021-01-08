@@ -112,7 +112,7 @@ class ViewController: UIViewController , UITextFieldDelegate{
             viewMap = segue.destination as? ViewMap
             viewMap.socketConnector = socketConnector
             viewMap.timer = Timer.scheduledTimer(
-                timeInterval: 1.0, target: viewMap, selector: #selector(viewMap.fireTimer), userInfo: nil, repeats: true)
+                timeInterval: 0.5, target: viewMap, selector: #selector(viewMap.fireTimer), userInfo: nil, repeats: true)
             viewMap.mainDlg = self
             viewID = 4
         default:
