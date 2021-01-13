@@ -94,6 +94,7 @@ class SocketDataManager: NSObject, StreamDelegate {
         case .hasSpaceAvailable:
             print("Stream has space available now")
         case .errorOccurred:
+            print("Error!")
             print("\(aStream.streamError?.localizedDescription ?? "")")
         case .endEncountered:
             aStream.close()

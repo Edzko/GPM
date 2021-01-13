@@ -8,14 +8,7 @@
 
 import UIKit
 
-class settingCell: UITableViewCell {
-    
-    @IBAction func oneButton(_ sender: Any) {
-    }
-    
-    @IBAction func twoButton(_ sender: Any) {
-    }
-}
+
 
 
 class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -61,10 +54,18 @@ class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data[section].count
     }
+    
+    @objc func switchChanged (_ sender: UISwitch!) {
+        print("switch!")
+    }
+    
+    @objc func parChanged(_ sender: UITextField) {
+        print("parameter!")
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath as IndexPath)
-        //let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath as IndexPath) as! settingCell
+
         cell.textLabel!.text = data[indexPath.section][indexPath.row]
         print("Section: \(indexPath.section)")
         print("Row: \(indexPath.row)")
@@ -72,11 +73,27 @@ class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource
         //cell.oneButton.addTarget(self, action: #selector(ViewSettings.oneTapped(_:)), for: .touchUpInside)
         //cell.twoButton.addTarget(self, action: #selector(ViewSettings.twoTapped(_:)), for: .touchUpInside)
         
+        if indexPath.section==1 && indexPath.row==1 {
+            let switchView = UISwitch(frame: .zero)
+            switchView.setOn(true, animated: true)
+            switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
+            cell.accessoryView = switchView
+        }
+        if indexPath.section==1 && indexPath.row==2 {
+            let parView = UITextField(frame: CGRect(x:280, y:10, width:50.0, height:25.0))
+            parView.text = "100"
+            parView.backgroundColor = .yellow
+            
+            parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
+            cell.contentView.addSubview(parView)
+            //cell.accessoryView = parView
+        }
         
         //cell.imageView!.image = UIImage(named: "settings-gear-63")
         //cell.backgroundColor = UIColor
         return cell
     }
+ 
     
     func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath as IndexPath)

@@ -19,7 +19,7 @@ struct DataSocket {
     }
 }
 
-class ViewController: UIViewController , UITextFieldDelegate{
+class ViewController: UIViewController , UITextFieldDelegate {
     
     var socketConnector:SocketDataManager!
     var viewConsole:ViewConsole!
@@ -31,7 +31,10 @@ class ViewController: UIViewController , UITextFieldDelegate{
     var viewID : Int?
     var gotVersion: Bool?
     
+    let defaults = UserDefaults.standard
+    
     @IBOutlet weak var discLabel: UILabel!
+    @IBOutlet weak var connectBut: UIButton!
     
     @IBOutlet weak var discField: UITextField!
     
@@ -49,20 +52,39 @@ class ViewController: UIViewController , UITextFieldDelegate{
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
         viewID = 1;
         gotVersion = false
+        
+        
     }
     
     
+    @IBAction func OnConnect(_ sender: Any) {
+        let soc = DataSocket(ip: discField.text!, port: "2000")
+        socketConnector.connectWith(socket: soc)
+        socketConnector.send(message: "?v\r")
+        view.endEditing(true)
+        connectBut.title(for: UIButton.State.disabled)
+        
+        
+        defaults.set(discField.text, forKey: "IP")
+        
+    }
+    
     @objc func fireTimer() {
         let fd = discGPM?.fd
-        if fd == nil {
+        if fd == nil || true {
             timer.invalidate()
+            /*
             discLabel.text = "Discovery failed"
-            let ip = "192.168.10.172"
+            let ip = "192.168.10.184"
             discField.text = "GPM Module" + "  ( " + ip + " )"
             
             let soc = DataSocket(ip: ip, port: "2000")
             socketConnector.connectWith(socket: soc)
             socketConnector.send(message: "?v\r")
+            */
+            discLabel.text = "Enter Address:"
+            let ipaddress = defaults.string(forKey: "IP")
+            discField.text = ipaddress
             return
         }
         
@@ -126,12 +148,13 @@ class ViewController: UIViewController , UITextFieldDelegate{
             return false
         }
         discLabel.text = "Manual Entry:"
-        discField.text = "GPM Module" + "  ( " + ip + " )"
+        //discField.text = "GPM Module" + "  ( " + ip + " )"
         
-        let soc = DataSocket(ip: ip, port: "2000")
+        let soc = DataSocket(ip: discField.text!, port: "2000")
         socketConnector.connectWith(socket: soc)
         socketConnector.send(message: "?v\r")
         view.endEditing(true)
+        connectBut.title(for: UIButton.State.disabled)
         return true
     }
 }
