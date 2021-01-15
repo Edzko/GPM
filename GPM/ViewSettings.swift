@@ -14,8 +14,8 @@ import UIKit
 class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let data = [["About", "Update Firmware", "Licenses"],
-                ["Log data", "Log File", "Interval"]]
-    let headerTitles = ["Application", "Data logging"]
+                ["Log data", "Log File", "Interval"],["Authorization Code"]]
+    let headerTitles = ["Application", "Data logging", "Authorization"]
     
     // cell reuse id (cells that scroll out of view can be reused)
     let cellReuseIdentifier = "cell"
@@ -89,6 +89,7 @@ class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource
             //cell.accessoryView = parView
         }
         
+        cell.selectionStyle = .none
         //cell.imageView!.image = UIImage(named: "settings-gear-63")
         //cell.backgroundColor = UIColor
         return cell
@@ -111,17 +112,6 @@ class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource
         return nil
     }
     
-    
-    @objc func oneTapped(_ sender: Any?) {
-
-        print("Tapped one")
-    }
-
-    @objc func twoTapped(_ sender: Any?) {
-
-        print("Tapped two")
-       
-    }
     
     /*
     // MARK: - Navigation

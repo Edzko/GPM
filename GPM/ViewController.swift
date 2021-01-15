@@ -155,6 +155,7 @@ class ViewController: UIViewController , UITextFieldDelegate {
         socketConnector.send(message: "?v\r")
         view.endEditing(true)
         connectBut.title(for: UIButton.State.disabled)
+        defaults.set(discField.text, forKey: "IP")
         return true
     }
 }

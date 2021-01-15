@@ -19,6 +19,7 @@ class ViewMap: UIViewController, CLLocationManagerDelegate {
     var heading: Float?
     var timer = Timer()
 
+    @IBOutlet weak var swNorthUp: UISwitch!
     @IBOutlet weak var GPMMap: MKMapView!
     //let locationManager = CLLocationManager()
     
@@ -131,11 +132,14 @@ class ViewMap: UIViewController, CLLocationManagerDelegate {
         let info = valInt16(buf: message, start: 36)
         //infoField.text = String(format: "Info: %d",info)
         
-        let initialLocation = CLLocation(latitude: latitude!, longitude: longitude!)
-        GPMMap.centerToLocation(initialLocation)
-        
+        if swNorthUp.isOn {
+            heading = 0
+        }
+        let Location = CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
+        GPMMap.setCenter(Location, animated:true)
         GPMMap.camera.heading = Double(heading!)
         GPMMap.setCamera(GPMMap.camera,animated:true)
+        
         //GPMMap.setCamera(GPMMap.camera, withDuration: 1, animationTimingFunction:
         //                    CAMediaTimingFunction(name:
         //                    CAMediaTimingFunctionName.easeInEaseOut))
