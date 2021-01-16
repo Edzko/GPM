@@ -25,6 +25,8 @@ class ViewController: UIViewController , UITextFieldDelegate {
     var viewConsole:ViewConsole!
     var viewMap: ViewMap!
     var viewMonitor:ViewMonitor!
+    var viewPreferences: ViewPreferences!
+    var viewSysInfo: ViewSysInfo!
     var discGPM: UDPServer?
     var timer = Timer()
     var discCount: Int?
@@ -118,12 +120,26 @@ class ViewController: UIViewController , UITextFieldDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.destination {
+        case is ViewPreferences:
+            viewPreferences = segue.destination as? ViewPreferences
+            viewPreferences.socketConnector = socketConnector
+            viewPreferences.mainDlg = self
+            viewPreferences.timer = Timer.scheduledTimer(
+                timeInterval: 1.0, target: viewPreferences as Any, selector: #selector(viewPreferences.fireTimer), userInfo: nil, repeats: true)
+            viewID = 5
+        case is ViewSysInfo:
+            viewSysInfo = segue.destination as? ViewSysInfo
+            viewSysInfo.socketConnector = socketConnector
+            viewSysInfo.mainDlg = self
+            viewSysInfo.timer = Timer.scheduledTimer(
+                timeInterval: 1.0, target: viewSysInfo as Any, selector: #selector(viewSysInfo.fireTimer), userInfo: nil, repeats: true)
+            viewID = 6
         case is ViewMonitor:
             viewMonitor = segue.destination as? ViewMonitor
             viewMonitor?.socketConnector = socketConnector
             viewMonitor.mainDlg = self
             viewMonitor.timer = Timer.scheduledTimer(
-                timeInterval: 1.0, target: viewMonitor, selector: #selector(viewMonitor.fireTimer), userInfo: nil, repeats: true)
+                timeInterval: 1.0, target: viewMonitor as Any, selector: #selector(viewMonitor.fireTimer), userInfo: nil, repeats: true)
             viewID = 2
         case is ViewConsole:
             viewConsole = segue.destination as? ViewConsole
@@ -134,7 +150,7 @@ class ViewController: UIViewController , UITextFieldDelegate {
             viewMap = segue.destination as? ViewMap
             viewMap.socketConnector = socketConnector
             viewMap.timer = Timer.scheduledTimer(
-                timeInterval: 0.5, target: viewMap, selector: #selector(viewMap.fireTimer), userInfo: nil, repeats: true)
+                timeInterval: 0.5, target: viewMap as Any, selector: #selector(viewMap.fireTimer), userInfo: nil, repeats: true)
             viewMap.mainDlg = self
             viewID = 4
         default:

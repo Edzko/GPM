@@ -452,11 +452,41 @@
                     <navigationItem key="navigationItem" title="Configuration" prompt="System tuning and Calibration" id="zWn-DA-C5K" customClass="ViewPrefere"/>
                     <connections>
                         <outlet property="table" destination="vmz-oU-UNz" id="Vzc-Ik-RY0"/>
+                        <segue destination="VhH-4M-Dpf" kind="show" identifier="showSystemInfo" id="bNv-Vh-nUO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uqz-Mb-Tlb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="369.56521739130437" y="968.97321428571422"/>
+        </scene>
+        <!--System Information-->
+        <scene sceneID="Tux-I1-H4M">
+            <objects>
+                <viewController id="VhH-4M-Dpf" customClass="ViewSysInfo" customModule="GPM" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XIc-7d-A6p">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6Fz-zf-XnC">
+                                <rect key="frame" x="20" y="125" width="374" height="420"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cJd-f0-aKN"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="System Information" id="vA5-6I-RjP"/>
+                    <connections>
+                        <outlet property="versionField" destination="6Fz-zf-XnC" id="dNJ-u2-ckC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M4a-de-BaN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="370" y="1663"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4qp-Id-g3b">

@@ -76,12 +76,16 @@ class SocketDataManager: NSObject, StreamDelegate {
                             uiPresenter.viewMonitor?.update(message: dataBuffer)
                         } else if uiPresenter.viewID == 4 {
                             uiPresenter.viewMap?.update(message: dataBuffer)
+                        } else if uiPresenter.viewID == 5 {
+                            uiPresenter.viewPreferences?.update(message: dataBuffer)
                         } else {
                             let output = String(bytes: dataBuffer, encoding: .ascii)
                             if nil != output {
                                 print("server said: \(output ?? "")")
                                 if uiPresenter.viewID == 3 {
                                     uiPresenter.viewConsole?.update(message: "\(output!)")
+                                } else if uiPresenter.viewID == 6 {
+                                    uiPresenter.viewSysInfo?.update(message: "\(output!)")
                                 } else {
                                     uiPresenter?.update(message: "\(output!)")
                                 }
