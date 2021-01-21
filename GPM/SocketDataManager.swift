@@ -77,7 +77,7 @@ class SocketDataManager: NSObject, StreamDelegate {
                         } else if uiPresenter.viewID == 4 {
                             uiPresenter.viewMap?.update(message: dataBuffer)
                         } else if uiPresenter.viewID == 5 {
-                            uiPresenter.viewPreferences?.update(message: dataBuffer)
+                            uiPresenter.viewPreferences?.update(message: dataBuffer, length: len)
                         } else {
                             let output = String(bytes: dataBuffer, encoding: .ascii)
                             if nil != output {

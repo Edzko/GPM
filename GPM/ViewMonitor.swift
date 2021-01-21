@@ -22,6 +22,18 @@ class ViewMonitor: UIViewController {
     @IBOutlet weak var headField: UILabel!
     @IBOutlet weak var latField: UILabel!
     
+    @IBOutlet weak var steerField: UILabel!
+    @IBOutlet weak var brakeField: UILabel!
+    @IBOutlet weak var throttleField: UILabel!
+    @IBOutlet weak var rpmField: UILabel!
+    @IBOutlet weak var gearField: UILabel!
+    
+    @IBOutlet weak var emField: UILabel!
+    @IBOutlet weak var nmField: UILabel!
+    @IBOutlet weak var hdegField: UILabel!
+    @IBOutlet weak var erremField: UILabel!
+    @IBOutlet weak var errnmField: UILabel!
+    @IBOutlet weak var errhdegField: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,12 +94,18 @@ class ViewMonitor: UIViewController {
          float heading;
          float std;
          float Vpp;
-         uint16_t posType;
+         uint16_t posType;  // 36
          int16_t steer;
          int16_t brake;
          int16_t rpm;
          int16_t speed;
          int16_t gear;
+         float vehEm_loc;  // 48
+         float vehNm_loc;
+         float vehHdeg_loc;
+         float error_Em;
+         float error Nm;
+         float error_Hdeg;
          */
         
         if message.count<48 {
@@ -110,6 +128,41 @@ class ViewMonitor: UIViewController {
         
         let info = valInt16(buf: message, start: 36)
         infoField.text = String(format: "Info: %d",info)
+        
+        
+        let steer = valInt16(buf: message, start: 48)
+        steerField.text = String(format: "Steering: %i",steer)
+        
+        let brake = valInt16(buf: message, start: 48)
+        brakeField.text = String(format: "Brake: %i",brake)
+        
+        let throttle = valInt16(buf: message, start: 48)
+        throttleField.text = String(format: "Throttle: %i",throttle)
+        
+        let rpm = valInt16(buf: message, start: 48)
+        rpmField.text = String(format: "Engine rpm: %i",rpm)
+        
+        let gear = valInt16(buf: message, start: 48)
+        gearField.text = String(format: "Gear: %i",gear)
+        
+        
+        let vehEm = valFloat(buf: message, start: 48)
+        emField.text = String(format: "veh E (m): %1.2f",vehEm)
+        
+        let vehNm = valFloat(buf: message, start: 52)
+        nmField.text = String(format: "veh N (m): %1.2f",vehNm)
+        
+        let vehHdeg = valFloat(buf: message, start: 56)
+        hdegField.text = String(format: "veh H (deg): %1.2f",vehHdeg)
+        
+        let errEm = valFloat(buf: message, start: 60)
+        erremField.text = String(format: "err E (m): %1.2f",errEm)
+        
+        let errNm = valFloat(buf: message, start: 64)
+        errnmField.text = String(format: "err N (m): %1.2f",errNm)
+        
+        let errHdeg = valFloat(buf: message, start: 68)
+        errhdegField.text = String(format: "err H (deg): %1.2f",errHdeg)
         
     }
     

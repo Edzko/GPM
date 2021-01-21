@@ -8,16 +8,21 @@
 
 import UIKit
 
-class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewPreferences: UIViewController,
+                       UITableViewDelegate, UITableViewDataSource,
+                       UIPickerViewDataSource, UIPickerViewDelegate,
+                       UITextFieldDelegate {
     var socketConnector:SocketDataManager!
     var mainDlg: ViewController!
     var timer = Timer()
     
-    let data = [["About", "Parse NMEA","Parse UBLOX", "Licenses"],
+    let data = [["About", "Parse NMEA","Parse UBLOX", "Licenses", "Update"],
                 ["User", "Password", "Server","Port","Enable"],
-                ["Enable", "Novatel (drCheck)", "Vehicle"]]
+                ["Enable", "Dead Reckoning (drCheck)", "Vehicle"]]
     let headerTitles = ["Application", "NTRIP (RTK)", "Dead reckoning"]
-    let vehicleData = ["Jeep", "NMP", "UBot"]
+    
+    let drData = ["RTK", "DR"]
+    let vehicleData = ["None", "Red Jeep", "Black Jeep", "Grey Jeep", "White Jeep","NMP","UBot"]
     
     // cell reuse id (cells that scroll out of view can be reused)
     let cellReuseIdentifier = "cell"
@@ -26,7 +31,12 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
     var parsenmeaSwitch : UISwitch?
     var ntripSwitch : UISwitch?
     var vehiclePicker : UIPickerView?
-    var viewSysInfo:ViewSysInfo!
+    var viewSysInfo: ViewSysInfo!
+    var drEnableSwitch: UISwitch?
+    var drSelectSwitch: UISwitch?
+    
+    var cfgdata = Array<UInt8>(repeating: 0, count: 1024)
+    var len: Int = 0
     
     
     var uubuf = [UInt8](repeating: 0, count: 1024)  // represents "SP#<UUENCODED_BINARY_STRUCT>\r"
@@ -92,12 +102,48 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
         return vehicleData[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
+        send(message: "sp32,"+String(row+1)+"\r")
     }
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pLabel: UILabel? = (view as? UILabel)
+        if pLabel == nil {
+            pLabel = UILabel()
+            pLabel?.font = UIFont(name: "Arial", size: 14.0)
+            pLabel?.textAlignment = .center
+        }
+        pLabel?.text = vehicleData[row]
+        pLabel?.textColor = UIColor.blue
+        
+        return pLabel!
+    }
+    /*
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let titleData = vehicleData[row]
-        let myTitle = NSAttributedString(string: titleData, attributes: [NSAttributedString.Key.font:UIFont(name: "Arial", size: 8.0)!,NSAttributedString.Key.foregroundColor:UIColor.blue])
+        let myTitle = NSAttributedString(string: titleData, attributes: [NSAttributedString.Key.font:UIFont(name: "Arial", size: 2.0)!,NSAttributedString.Key.foregroundColor:UIColor.black])
         return myTitle
+    }
+     */
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("Text Field Tag: ",textField.tag)
+        switch(textField.tag) {
+        case 10:
+            print("User name: ",textField.text!)
+            send(message: "sp52,"+textField.text!+"\r")
+        case 11:
+            print("Password: ",textField.text!)
+            send(message: "sp53,"+textField.text!+"\r")
+        case 12:
+            print("NTRIP address: ",textField.text!)
+            send(message: "sp50,"+textField.text!+"\r")
+        case 13:
+            print("NTRIP port: ",textField.text!)
+            send(message: "sp50,"+textField.text!+"\r")
+        default:
+            print("Text: ",textField.text!)
+        }
+        view.endEditing(true)
+        return true
     }
     
     func valDouble(buf: Array<UInt8>, start: Int) -> Double {
@@ -131,6 +177,12 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
     func uudecode_u8(buf: Array<UInt8>, at: Int) -> UInt8 {
         let i = 3 + at*2
         var val:UInt8 = 0
+        if buf[i] < Character("0").asciiValue! {
+            return 0
+        }
+        if buf[i+1] < Character("0").asciiValue! {
+            return 0
+        }
         if buf[i] > Character("9").asciiValue! {
             val += UInt8(UInt(16*(Int(buf[i] - Character("A").asciiValue!) + 10)))
         } else {
@@ -147,7 +199,7 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
         
     }
     
-    func update(message: Array<UInt8>) {
+    func update(message: Array<UInt8>, length: Int) {
         /*
          typedef struct
          {
@@ -187,33 +239,47 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
          } CONFIG_DATA;
          */
         
+        if len+length>=1000 {
+            len = 0
+        }
+        for ic in 0..<length {
+            cfgdata[len+ic] = message[ic]
+        }
+        len += length
         
-        if message.count<48 {
+        
+        if len<330 {
             return
         }
-        if (message[0] != Character("S").asciiValue) ||
-            (message[1] != Character("P").asciiValue) ||
-            (message[2] != Character("#").asciiValue)  {
+        
+        if (cfgdata[0] != Character("S").asciiValue) ||
+            (cfgdata[1] != Character("P").asciiValue) ||
+            (cfgdata[2] != Character("#").asciiValue)  {
             return
         }
-        if uudecode_u8(buf:message,at:0) != 1 {
+        if uudecode_u8(buf:cfgdata,at:0) != 1 {
         //    return
         }
         
         var changed = false
-        print("SP# message length %i",message.count)
-        for i in 0..<message.count {
-            if uubuf[i] != message[i] {
+        print("SP# message length %i",len)
+        for i in 0..<len {
+            if uubuf[i] != cfgdata[i] {
                 changed = true;
-                uubuf[i] = message[i]
+                uubuf[i] = cfgdata[i]
             }
         }
         if changed == false {
             return
         }
         
-        let flags = uudecode_u8(buf: message,at: 1)
-        
+        let flags = uudecode_u8(buf: cfgdata,at: 1)
+        if flags & 4 == 4 {
+            drEnableSwitch?.setOn(true, animated: true)
+        } else {
+            drEnableSwitch?.setOn(false,animated: true)
+            
+        }
         if flags & 8 == 8 {
             parsenmeaSwitch?.setOn(true, animated: true)
         } else {
@@ -226,6 +292,15 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
             parseubloxSwitch?.setOn(false,animated: true)
             
         }
+        if flags & 32 == 32 {
+            drSelectSwitch?.setOn(true, animated: true)
+        } else {
+            drSelectSwitch?.setOn(false,animated: true)
+            
+        }
+        
+        let drVehicle = Int(uudecode_u8(buf: cfgdata,at: 163))
+        vehiclePicker?.selectRow(drVehicle, inComponent: 0, animated: true)
         /*
         let lat = valDouble(buf: message, start: 8)
         //latField.text = String(format: "Latitude: %1.10f",lat)
@@ -245,6 +320,8 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
         let info = valInt16(buf: message, start: 36)
         //infoField.text = String(format: "Info: %d",info)
         */
+        
+        len = 0;  // restart message
     }
      
     
@@ -269,16 +346,43 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     @objc func parsenmeaChanged (_ sender: UISwitch!) {
-        print("switch!")
+        print("nmea switch ", parsenmeaSwitch!.isOn)
+        if (parsenmeaSwitch!.isOn)  {
+            send(message: "sp15,1\r")
+        } else {
+            send(message: "sp15,0\r")
+        }
     }
     @objc func parseubloxChanged (_ sender: UISwitch!) {
-        print("switch!")
+        print("ublox switch ", parseubloxSwitch!.isOn)
+        if (parseubloxSwitch!.isOn) {
+            send(message: "sp16,1\r")
+        } else {
+            send(message: "sp16,0\r")
+        }
+    
     }
     @objc func ntripChanged (_ sender: UISwitch!) {
-        print("switch!")
+        print("ntrip switch ", ntripSwitch!.isOn)
+        if (ntripSwitch!.isOn) {
+            send(message: "ub6\r")
+        } else {
+            send(message: "ub2,0\r")
+        }
     }
-    @objc func switchChanged (_ sender: UISwitch!) {
-        print("switch!")
+    @objc func drEnableChanged (_ sender: UISwitch!) {
+        if (drEnableSwitch!.isOn) {
+            send(message: "sp7,1\r")
+        } else {
+            send(message: "sp7,0\r")
+        }
+    }
+    @objc func drSelectChanged (_ sender: UISwitch!) {
+        if (drSelectSwitch!.isOn) {
+            send(message: "sp30,1\r")
+        } else {
+            send(message: "sp30,0\r")
+        }
     }
     @objc func parChanged(_ sender: UITextField) {
         print("parameter!")
@@ -291,80 +395,75 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
         print("Section: \(indexPath.section)")
         print("Row: \(indexPath.row)")
         
-        //cell.oneButton.addTarget(self, action: #selector(ViewSettings.oneTapped(_:)), for: .touchUpInside)
-        //cell.twoButton.addTarget(self, action: #selector(ViewSettings.twoTapped(_:)), for: .touchUpInside)
-        if indexPath.section==0 && indexPath.row==1 {
+        let cellid = 10*indexPath.section + indexPath.row
+        switch (cellid) {
+        case 1:
             parsenmeaSwitch = UISwitch(frame: .zero)
             parsenmeaSwitch?.setOn(true, animated: true)
             parsenmeaSwitch?.addTarget(self, action: #selector(parsenmeaChanged), for: .valueChanged)
             cell.accessoryView = parsenmeaSwitch
-        }
-        if indexPath.section==0 && indexPath.row==2 {
+        case 2:
             parseubloxSwitch = UISwitch(frame: .zero)
             parseubloxSwitch?.setOn(true, animated: true)
             parseubloxSwitch?.addTarget(self, action: #selector(parseubloxChanged), for: .valueChanged)
             cell.accessoryView = parseubloxSwitch
-        }
-        if indexPath.section==1 && indexPath.row==4 {
+        case 10:
+            let parView = UITextField(frame: CGRect(x:0, y:0, width:120.0, height:25.0))
+            parView.text = "Edzko"
+            parView.backgroundColor = .lightText
+            parView.textAlignment = .right
+            parView.delegate = self
+            parView.tag = cellid
+            
+            parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
+            cell.accessoryView = parView
+        case 11:
+            let parView = UITextField(frame: CGRect(x:0, y:0, width:120.0, height:25.0))
+            parView.text = "MDOTmagna3"
+            parView.backgroundColor = .lightText
+            parView.delegate = self
+            parView.textAlignment = .right
+            parView.tag = cellid
+            
+            parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
+            cell.accessoryView = parView
+        case 12:
+            let parView = UITextField(frame: CGRect(x:0, y:0, width:120.0, height:25.0))
+            parView.text = "148.149.0.87"
+            parView.backgroundColor = .lightText
+            parView.textAlignment = .right
+            parView.delegate = self
+            parView.tag = cellid
+            
+            parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
+            cell.accessoryView = parView
+        case 13:
+            let parView = UITextField(frame: CGRect(x:0, y:0, width:70.0, height:25.0))
+            parView.text = "10000"
+            parView.backgroundColor = .lightText
+            parView.textAlignment = .right
+            parView.delegate = self
+            parView.tag = cellid
+            
+            parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
+            cell.accessoryView = parView
+        case 14:
             ntripSwitch = UISwitch(frame: .zero)
             ntripSwitch?.setOn(true, animated: true)
             ntripSwitch?.addTarget(self, action: #selector(ntripChanged), for: .valueChanged)
             cell.accessoryView = ntripSwitch
-        }
+        case 20:
         
-        
-        if indexPath.section==1 && indexPath.row==0 {
-            let parView = UITextField(frame: CGRect(x:0, y:0, width:120.0, height:25.0))
-            parView.text = "Edzko"
-            parView.backgroundColor = .lightGray
-            parView.textAlignment = .right
-            
-            parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
-            cell.accessoryView = parView
-        }
-        if indexPath.section==1 && indexPath.row==1 {
-            let parView = UITextField(frame: CGRect(x:0, y:0, width:120.0, height:25.0))
-            parView.text = "MDOTmagna3"
-            parView.backgroundColor = .lightGray
-            parView.textAlignment = .right
-            
-            parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
-            cell.accessoryView = parView
-        }
-        if indexPath.section==1 && indexPath.row==2 {
-            let parView = UITextField(frame: CGRect(x:0, y:0, width:120.0, height:25.0))
-            parView.text = "148.149.0.87"
-            parView.backgroundColor = .lightGray
-            parView.textAlignment = .right
-            
-            parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
-            cell.accessoryView = parView
-        }
-        if indexPath.section==1 && indexPath.row==3 {
-            let parView = UITextField(frame: CGRect(x:0, y:0, width:70.0, height:25.0))
-            parView.text = "100"
-            parView.backgroundColor = .lightGray
-            parView.textAlignment = .right
-            
-            parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
-            cell.accessoryView = parView
-        }
-        
-        
-        
-        if indexPath.section==2 && indexPath.row==0 {
-            let switchView = UISwitch(frame: .zero)
-            switchView.setOn(true, animated: true)
-            switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
-            cell.accessoryView = switchView
-        }
-        if indexPath.section==2 && indexPath.row==1{
-            let switchView = UISwitch(frame: .zero)
-            switchView.setOn(true, animated: true)
-            switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
-            cell.accessoryView = switchView
-        }
-        if indexPath.section==2 && indexPath.row==2 {
+            drEnableSwitch = UISwitch(frame: .zero)
+            drEnableSwitch?.setOn(true, animated: true)
+            drEnableSwitch?.addTarget(self, action: #selector(drEnableChanged), for: .valueChanged)
+            cell.accessoryView = drEnableSwitch
+        case 21:
+            drSelectSwitch = UISwitch(frame: .zero)
+            drSelectSwitch?.setOn(true, animated: true)
+            drSelectSwitch?.addTarget(self, action: #selector(drSelectChanged), for: .valueChanged)
+            cell.accessoryView = drSelectSwitch
+        case 22:
             vehiclePicker = UIPickerView(frame: CGRect(x:0, y:0, width:120.0, height:35.0))
             vehiclePicker?.delegate = self
             vehiclePicker?.dataSource = self
@@ -372,6 +471,9 @@ class ViewPreferences: UIViewController, UITableViewDelegate, UITableViewDataSou
             //switchView.setOn(true, animated: true)
             //switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
             cell.accessoryView = vehiclePicker
+        default:
+            print("No control for ",indexPath.section,",",indexPath.row)
+            
         }
 
         

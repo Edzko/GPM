@@ -13,7 +13,7 @@ import UIKit
 
 class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let data = [["About", "Update Firmware", "Licenses"],
+    let data = [["About", "Licenses"],
                 ["Log data", "Log File", "Interval"],["Authorization Code"]]
     let headerTitles = ["Application", "Data logging", "Authorization"]
     
@@ -46,9 +46,9 @@ class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource
         print("Value: \(data[indexPath.section][indexPath.row])")
         
         // do whatver when clicked here
-        if indexPath.row==1 && indexPath.section==0 {
-            self.performSegue(withIdentifier: "showAboutView", sender: self)
-        }
+        //if indexPath.row==1 && indexPath.section==0 {
+        //    self.performSegue(withIdentifier: "showAboutView", sender: self)
+        //}
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,19 +67,16 @@ class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath as IndexPath)
 
         cell.textLabel!.text = data[indexPath.section][indexPath.row]
-        print("Section: \(indexPath.section)")
-        print("Row: \(indexPath.row)")
-        
-        //cell.oneButton.addTarget(self, action: #selector(ViewSettings.oneTapped(_:)), for: .touchUpInside)
-        //cell.twoButton.addTarget(self, action: #selector(ViewSettings.twoTapped(_:)), for: .touchUpInside)
-        
-        if indexPath.section==1 && indexPath.row==1 {
+        let cellid = 10*indexPath.section + indexPath.row
+        switch (cellid) {
+        case 0:
+            cell.accessoryType = .disclosureIndicator
+        case 11:
             let switchView = UISwitch(frame: .zero)
             switchView.setOn(true, animated: true)
             switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
             cell.accessoryView = switchView
-        }
-        if indexPath.section==1 && indexPath.row==2 {
+        case 12:
             let parView = UITextField(frame: CGRect(x:280, y:10, width:50.0, height:25.0))
             parView.text = "100"
             parView.backgroundColor = .yellow
@@ -87,6 +84,8 @@ class ViewSettings: UIViewController, UITableViewDelegate, UITableViewDataSource
             parView.addTarget(self, action: #selector(parChanged), for: .valueChanged)
             cell.contentView.addSubview(parView)
             //cell.accessoryView = parView
+        default:
+            print(cellid)
         }
         
         cell.selectionStyle = .none

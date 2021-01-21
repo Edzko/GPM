@@ -306,11 +306,22 @@
                     </view>
                     <navigationItem key="navigationItem" title="Monitor" id="WEB-0g-nVj"/>
                     <connections>
+                        <outlet property="brakeField" destination="T6v-g3-OWU" id="g7m-CI-hE1"/>
+                        <outlet property="emField" destination="ZXe-sO-xe6" id="HG5-zb-WJ3"/>
+                        <outlet property="erremField" destination="AgZ-DZ-JLa" id="n7g-oc-dvz"/>
+                        <outlet property="errhdegField" destination="X1B-g4-r3i" id="sBE-et-bpd"/>
+                        <outlet property="errnmField" destination="S4f-Ri-zTO" id="caB-tK-iWe"/>
+                        <outlet property="gearField" destination="XNH-W2-eBE" id="ZfU-EJ-uZl"/>
+                        <outlet property="hdegField" destination="gp2-h8-fe9" id="Rpm-ij-olA"/>
                         <outlet property="headField" destination="ZBc-t6-ICO" id="MaQ-Gc-bjj"/>
                         <outlet property="infoField" destination="Iey-jv-ERe" id="wg9-GE-1Jf"/>
                         <outlet property="latField" destination="EGm-ry-Zdc" id="qN6-MH-ZID"/>
                         <outlet property="lonField" destination="40m-Xa-xMV" id="efW-F4-29O"/>
+                        <outlet property="nmField" destination="ygB-BY-leS" id="rw6-hc-hnp"/>
+                        <outlet property="rpmField" destination="T9U-Zw-XJa" id="wzJ-SS-vQs"/>
                         <outlet property="stdField" destination="wez-Wc-Khy" id="Geo-Bq-TgD"/>
+                        <outlet property="steerField" destination="lZ5-So-CMY" id="JF2-Xz-7Ao"/>
+                        <outlet property="throttleField" destination="zXO-mY-3KD" id="Ie3-KY-XXI"/>
                         <outlet property="vccField" destination="rDU-Bz-r7d" id="VeM-08-x2u"/>
                     </connections>
                 </viewController>
@@ -331,11 +342,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="072-Vc-0EZ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="072-Vc-0EZ">
                                 <rect key="frame" x="20" y="818" width="374" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="072-Vc-0EZ" id="zfc-ye-qbv">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -346,7 +357,6 @@
                     <navigationItem key="navigationItem" title="Settings" id="Xjl-hF-uKD"/>
                     <connections>
                         <outlet property="settings" destination="ybL-OK-uXn" id="XQC-Fg-bOt"/>
-                        <segue destination="hmU-W0-6y4" kind="show" identifier="showAboutView" id="SrG-bj-hDn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Dt-xE-yzm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
