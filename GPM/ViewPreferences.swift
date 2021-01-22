@@ -301,6 +301,14 @@ class ViewPreferences: UIViewController,
         
         let drVehicle = Int(uudecode_u8(buf: cfgdata,at: 163))
         vehiclePicker?.selectRow(drVehicle, inComponent: 0, animated: true)
+        
+        let wf_state = Int(uudecode_u8(buf: cfgdata,at: 155))
+        if wf_state == 25 {
+            ntripSwitch?.setOn(true, animated: true)
+        } else {
+            ntripSwitch?.setOn(false, animated: true)
+        }
+        
         /*
         let lat = valDouble(buf: message, start: 8)
         //latField.text = String(format: "Latitude: %1.10f",lat)
@@ -365,9 +373,9 @@ class ViewPreferences: UIViewController,
     @objc func ntripChanged (_ sender: UISwitch!) {
         print("ntrip switch ", ntripSwitch!.isOn)
         if (ntripSwitch!.isOn) {
-            send(message: "ub6\r")
+            send(message: "wf4\r")
         } else {
-            send(message: "ub2,0\r")
+            send(message: "wf5\r")
         }
     }
     @objc func drEnableChanged (_ sender: UISwitch!) {

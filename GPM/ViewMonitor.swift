@@ -127,9 +127,12 @@ class ViewMonitor: UIViewController {
         vccField.text = String(format: "Power: %1.2f",vcc)
         
         let info = valInt16(buf: message, start: 36)
-        infoField.text = String(format: "Info: %d",info)
-        
-        
+        switch info {
+        case 4: infoField.text = String(format: "Info: 4  (Float)")
+        case 5: infoField.text = String(format: "Info: 5  (Fixed)")
+        default: infoField.text = String(format: "Info: %d  (GPS)",info)
+        }
+
         let steer = valInt16(buf: message, start: 48)
         steerField.text = String(format: "Steering: %i",steer)
         
